@@ -6,7 +6,7 @@ env:
      helm_gitlab_cred: "p@ssword"
      helm_gitlab_repo: "gitlab.ws.example.com/workshop/helm.git"
 
-     accountid: "1234567890123"
+     accountid: "123456789012"
      aws_region: "ap-northeast-2"
      
      # Once security scanning in Amazon ECR is completed, get target image's URI and tag as parameters. 

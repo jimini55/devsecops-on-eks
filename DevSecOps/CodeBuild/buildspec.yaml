@@ -3,18 +3,18 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - export IMAGE_REPO_NAME="hancom-repo" // 한컴 repo 이름으로 변경
-      - export AWS_ACCOUNT_ID="038445823716" // 한컴 Account로 변경
+      - export IMAGE_REPO_NAME="example-repo" 
+      - export AWS_ACCOUNT_ID="123456789012" 
       - export REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/$IMAGE_REPO_NAME
-      - export COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) // 한컴 이미지 태그 정책에 맞게 변경
-      - export IMAGE_TAG=${COMMIT_HASH:=latest} // 한컴 이미지 태그 정책에 맞게 변경
+      - export COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) 
+      - export IMAGE_TAG=${COMMIT_HASH:=latest} 
       - echo $AWS_DEFAULT_REGION
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...    
-      - cd cats // 테스트 환경의 Dockerfile 경로임. 한컴 환경에 맞게 변경
+      - cd cats 
       - echo `pwd`
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG      
@@ -25,5 +25,5 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - cd ..
       - echo `pwd`
-      - chmod 755 scan-image.sh // 쉘 스크립트 실행 권한 부여
+      - chmod 755 scan-image.sh 
       - ./scan-image.sh $IMAGE_TAG $IMAGE_REPO_NAME
