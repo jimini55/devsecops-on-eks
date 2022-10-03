@@ -1,0 +1,45 @@
+version: 0.2
+
+env:
+  variables:
+     helm_gitlab_userid: "userA"
+     helm_gitlab_cred: "p@ssword"
+     helm_gitlab_repo: "gitlab.ws.example.com/workshop/helm.git"
+
+     accountid: "1234567890123"
+     aws_region: "ap-northeast-2"
+     
+     # Once security scanning in Amazon ECR is completed, get target image's URI and tag as parameters. 
+     EXAMPLE_IMAGE_EVENT: 'example1'
+
+phases:
+  pre_build:
+    commands:
+      - env
+      # install the packages 
+      - yum -y install python3
+      - yum -y install python3-pip
+      - yum -y install python-setuptools
+      - python3 -m pip install jinja-cli
+      - pip3 install yq
+      - git config --global user.name "codecommit"
+      - git config --global user.email "codecommit@aws.com"
+      - git config --global credential.helper 'cache --timeout 3600'
+      - cd $CODEBUILD_SRC_DIR
+      - git clone <https://$>{helm_gitlab_userid}:${helm_gitlab_cred}@$helm_gitlab_repo myhelm
+  build:
+    commands:
+      - echo "Processing - ${EXAMPLE_IMAGE_EVENT} ${EXAMPLE_example1_TAG}"
+      - cd $CODEBUILD_SRC_DIR/myhelm
+      # Use yq to parse YAML file 
+      - |
+        if [[ ${repository} == *"${EXAMPLE_IMAGE_EVENT}"* ]]; then
+          yq -yi ".example1.image.tag = \\"$imagetag\\"" values.yaml
+        fi
+      # Add other logics if you need 
+      - git add -A .
+      - git commit -m "${repository} ${imagetag}"
+      - git push
+  post_build:
+    commands:
+      - echo "Done."
