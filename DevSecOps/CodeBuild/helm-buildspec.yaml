@@ -20,7 +20,6 @@ phases:
       - yum -y install python3
       - yum -y install python3-pip
       - yum -y install python-setuptools
-      - python3 -m pip install jinja-cli
       - pip3 install yq
       - git config --global user.name "codecommit"
       - git config --global user.email "codecommit@aws.com"
