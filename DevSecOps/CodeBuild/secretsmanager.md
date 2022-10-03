@@ -1,7 +1,6 @@
+# AWS SecretsManager Examples
 
-Format: <key>:<secret-id>:<json-key>:<version-stage>|<version-id>
-
-# Soanrqube Credentials
+## Soanrqube Credentials
 
 ```
 version: 0.2
@@ -23,7 +22,7 @@ phases:
       - echo Sonar Project key info - $SONAR_PROJECT_NAME
 ```
 
-# Slack webhook
+## Slack webhook
 ```
 client = boto3.client('secretsmanager')
 secretdict = json.loads(client.get_secret_value( SecretId='SonarQube' ).get('SecretString'))

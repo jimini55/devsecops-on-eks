@@ -114,14 +114,14 @@ e.g. Filtering on image age - find more [here](https://docs.aws.amazon.com/Amazo
 ## Identity and Access Management 
 * Make the EKS Cluster Endpoint [private](https://aws.amazon.com/ko/blogs/containers/de-mystifying-cluster-networking-for-amazon-eks-worker-nodes/)
     * Public and Private
-    ![](public_private_ep.jpg)
+    ![](/SecurityChecklist/images/public_private_ep.jpg)
     * Private Endpoint only
-    ![](private_ep.jpg)
+    ![](/SecurityChecklist/images/private_ep.jpg)
 * Create the cluster with a dedicated IAM role
     * When you create an Amazon EKS cluster, the IAM entity user or role, such as a federated user that creates the cluster, is automatically granted system:masters permissions in the cluster's RBAC configuration. This access cannot be removed and is not managed through the aws-auth ConfigMap. Therefore it is a good idea to create the cluster with a dedicated IAM role and regularly audit who can assume this role. This role should not be used to perform routine actions on the cluster, and instead additional users should be granted access to the cluster through the aws-auth ConfigMap for this purpose. After the aws-auth ConfigMap is configured, the role can be deleted and only recreated in an emergency / break glass scenario where the aws-auth ConfigMap is corrupted and the cluster is otherwise inaccessible. This can be particularly useful in production clusters which do not usually have direct user access configured.
 * Employ principle of least privileges
 * Leverage IRSA (IAM Role for Sevice Account)
-    * ![](irsa.jpg)
+    * ![](/SecurityChecklist/images/irsa.jpg)
     * [Update the aws-node daemonset to use IRSA](https://aws.github.io/aws-eks-best-practices/security/docs/iam/#update-the-aws-node-daemonset-to-use-irsa)
         * [Script](https://github.com/aws/aws-eks-best-practices/tree/master/projects/enable-irsa/src)
         * [Refer to AWS Official doc](https://docs.aws.amazon.com/eks/latest/userguide/cni-iam-role.html)
@@ -129,9 +129,9 @@ e.g. Filtering on image age - find more [here](https://docs.aws.amazon.com/Amazo
 
 ## Kubernetes Security Monitoring
 * Analyze Control Plane logs
-![](controlplane_log.jpg)
+![](/SecurityChecklist/images/controlplane_log.jpg)
 * Audit EKS API calls with CloudTrail
-![](log_analysis.jpg)
+![](/SecurityChecklist/images//SecurityChecklist/images/log_analysis.jpg)
 
 
 ## Protect Secrets
@@ -146,7 +146,7 @@ e.g. Filtering on image age - find more [here](https://docs.aws.amazon.com/Amazo
     * limits!
 
 ## Threat Detection using Amazon GuardDuty
-![](guardduty.png)
+![](/SecurityChecklist/images/guardduty.png)
 
 ## Multi Tentant SaaS Security
 - https://d1.awsstatic.com/whitepapers/security-practices-for-multi-tenant-saas-apps-using-eks.pdf
